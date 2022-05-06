@@ -32,7 +32,9 @@ export default function Home({ posts }){
         </div>
 
     )
+
 }
+//get the ininitial data
 export async function getServerSideProps() {
     const posts = (await getPosts())||[];
     return {
