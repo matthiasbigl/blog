@@ -1,6 +1,8 @@
 import React from 'react';
+import {Header} from "./";
 import moment from "moment";
-import { RichText } from '@graphcms/rich-text-react-renderer';
+import parse from "html-react-parser";
+import { RichText } from '@graphcms/rich-text-react-renderer';import { RichText } from '@graphcms/rich-text-react-renderer';
 
 // @ts-ignore
 const PostDetail = ({post}) => {
@@ -52,13 +54,11 @@ const PostDetail = ({post}) => {
                     {post.title}
                 </h1>
                 {console.log(post.content.html)}
-                <div>
-                    <RichText
-                        content={post.content.raw}
-
-                    />
-                </div>
-
+                <RichText
+                    content={
+                    post.content.raw
+                    }
+                />
             </div>
         </div>
     );
