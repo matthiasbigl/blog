@@ -3,9 +3,14 @@ import {useState, useEffect} from "react";
 import {getRecentPosts, getSimilarPosts} from "../services";
 import moment from "moment";
 import Link from "next/link";
+import Image from "next/image";
+
+
 
 const PostWidget = ({categories, slug}) => {
+
     const [relatedPosts, setRelatedPosts] = useState([])
+
 
     function renderImages(post) {
         let image;
@@ -17,8 +22,9 @@ const PostWidget = ({categories, slug}) => {
         }
         return (
             <div className={"w-16 flex-none"}>
-                <img
+                <Image
                     alt={post.title}
+                    unoptimized
                     height="60px"
                     width="60px"
                     className={" align-middle rounded-full "}
@@ -32,6 +38,7 @@ const PostWidget = ({categories, slug}) => {
 
         //check if slug exists
         if (slug) {
+            console.log(slug);
             getSimilarPosts(categories, slug).then((result) => setRelatedPosts(result))
         } else {
             getRecentPosts().then((result) => setRelatedPosts(result))
@@ -39,7 +46,7 @@ const PostWidget = ({categories, slug}) => {
 
     }, [slug]);
     return (
-        <div className="text-zinc-200 bg-zinc-800 shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8">
+        <div className="text-zinc-200 bg-zinc-800 shadow-lg rounded-lg p-8 pb-12 mb-8">
             <h3 className='text-xl mb-8 font-semibold border-b pb-4'>
                 {slug ? 'Related Poste' : 'Recent Posts'}
             </h3>
