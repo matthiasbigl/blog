@@ -43,10 +43,15 @@ body {
 }
 ul{
   list-style: indside url("https://www.mediaevent.de/css/svg/arrow-right.svg") ;
+  padding-left: 2rem ;
+  padding-bottom: 2rem;
+
 }
 ol{
   list-style-type: decimal;
   list-style-position: inside;
+  padding-left: 2rem ;
+  padding-bottom: 2rem;
 }
 
 .react-multi-carousel-list {
