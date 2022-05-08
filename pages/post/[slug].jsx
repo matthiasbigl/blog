@@ -7,7 +7,7 @@ const PostDetails = ({post}) => {
     console.log(post);
     console.log(post.slug);
     console.log(post.categories);
-   //print all of the categories to the console
+   //print all of the category to the console
 
 
     return (<div className={'container mx-auto px-10 mb-8 text-zinc-200'}>

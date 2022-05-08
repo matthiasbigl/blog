@@ -2,13 +2,19 @@ import "../styles/globals.scss";
 import type { AppProps } from 'next/app'
 import React, {useEffect,useState} from "react";
 import {Layout} from "../components";
+import {UserContext } from "../components/UserContext"
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  return(
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+
+    return(
+        // @ts-ignore
+      <UserContext.Provider value={"hello world from context"}>
+          <Layout>
+              <Component {...pageProps} />
+          </Layout>
+      </UserContext.Provider>
+
 
   );
 }

@@ -7,4 +7,6 @@ export {default as Comment} from './Comment';
 export {default as CommentForm} from './CommentForm';
 export {default as Author} from './Author';
 export {default as PostDetail} from './PostDetail';
+// @ts-ignore
+export {default as Loader} from './Loader';
 

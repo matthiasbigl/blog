@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {getCategories} from '../services'
 
 
+
 const Header = () => {
     const [categories, setCategories] = useState([]);
 
@@ -24,16 +25,30 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className='hidden md:float-left md:contents'>
-                    {categories.map((category) => (
-                        <Link href={`/category/${category.slug}`} key={category.slug}>
+
+                    <div className= 'display: md:flex float-right align-middle text-zinc-200 font-semibold cursor-pointer'>
+                        {categories.map((category) => (
+                            <Link href={`/category/${category.slug}`} key={category.slug}>
                             <span
-                                className={'md:float-right mt-2 align-middle text-white ml-4 font-semibold cursor-pointer'}>
+                                className={'ml-4 '}
+                                >
                                 {category.name}
                             </span>
-                        </Link>
-                    ))}
+                            </Link>
+
+                        ))}
+
+                        <div className={'self-end ml-4'}>
+
+                        </div>
+
+                    </div>
+
+
+
 
                 </div>
+
             </div>
         </div>
     );
