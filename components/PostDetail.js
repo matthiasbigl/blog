@@ -1,7 +1,5 @@
 import React from 'react';
-import {Header} from "./";
 import moment from "moment";
-import parse from "html-react-parser";
 import { RichText } from '@graphcms/rich-text-react-renderer';
 
 // @ts-ignore
