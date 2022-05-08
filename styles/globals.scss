@@ -41,6 +41,13 @@ body {
     }
   }
 }
+ul{
+  list-style: indside url("https://www.mediaevent.de/css/svg/arrow-right.svg") ;
+}
+ol{
+  list-style-type: decimal;
+  list-style-position: inside;
+}
 
 .react-multi-carousel-list {
   & .arrow-btn{
