@@ -24,7 +24,6 @@ const PostWidget = ({categories, slug}) => {
             <div className={"w-16 flex-none"}>
                 <Image
                     alt={post.title}
-                    unoptimized
                     height="60px"
                     width="60px"
                     className={" align-middle rounded-full "}

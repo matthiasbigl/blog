@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import Link from 'next/link';
+import Image from "next/image";
 
 // @ts-ignore
 const PostCard = ({post}) => {
@@ -10,14 +11,17 @@ const PostCard = ({post}) => {
     function renederImage() {
         if (post.featuredImage) {
             console.log(post.image);
+            // @ts-ignore
             return (
 
                 <div className='bg-zinc-600 rounded-md relative overflow-hidden shadow-md pb-80 mb-6'>
 
 
-                    <img
+                    <Image
+
                         src={post.featuredImage.url}
                         alt={post.title}
+                        layout={'fill'}
                         className={'object-top absolute h-80 w-full object-cover shadow-lg rounded-t-lg lg:rounded-md'}
                     />
 
@@ -42,7 +46,7 @@ const PostCard = ({post}) => {
             </h1>
             <div className='block lg:flex text-center item-center justify-center mb-8 w-full'>
                 <div className='flex items-center justify-center mb-4 lg:mb-0 lg:w-auto mr-8'>
-                    <img
+                    <Image
                         alt={post.author.name}
                         height="40px"
                         width="40px"

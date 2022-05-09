@@ -2,6 +2,7 @@ import React from 'react';
 import {Header} from "./";
 import moment from "moment";
 import parse from "html-react-parser";
+import Image from "next/image";
 //import  RichText  from '@graphcms/rich-text-react-renderer';
 
 // @ts-ignore
@@ -10,9 +11,10 @@ const PostDetail = ({post}) => {
         if (post.featuredImage) {
             return (
                 <div className='relative overflow-hidden shadow-md mb-6'>
-                    <img
+                    <Image
                         src={post.featuredImage.url}
                         alt={post.title}
+                        layout='fill'
                         className='object-top h-full w-full rounded-t-lg lg:rounded-b-lg'
                     />
 
@@ -26,7 +28,7 @@ const PostDetail = ({post}) => {
             <div className='px-4 lg:px-0'>
                 <div className={'flex items-center mb-8 w-full'}>
                     <div className='flex items-center mb-4 lg:mb-0 lg:w-auto mr-8'>
-                        <img
+                        <Image
                             alt={post.author.name}
                             height="40px"
                             width="40px"

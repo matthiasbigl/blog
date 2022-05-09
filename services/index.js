@@ -16,16 +16,16 @@ export const getPosts = async () => {
                             photo {
                                 url
                             }
-                        }
-                        createdAt
-                        slug
-                        title
-                        excerpt
-                        featuredImage {
-                            url
-                        }
-                        categories {
-                            name
+                            }
+                            createdAt
+                            slug
+                            title
+                            excerpt
+                            featuredImage {
+                                url
+                            }
+                            categories {
+                                name
                             slug
                         }
                     }
@@ -40,7 +40,7 @@ export const getPosts = async () => {
 };
 
 export const getCategories = async () => {
-    const query = gql`
+    const query = gql`    
         query GetGategories {
             categories {
                 name
