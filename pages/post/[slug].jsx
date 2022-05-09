@@ -1,13 +1,19 @@
 import React from "react";
 import {getPosts, getPostDetails} from "../../services/";
 
-import {PostDetail, Categories, PostWidget, Author, Comment, CommentForm} from "../../components";
+import {PostDetail, Categories, PostWidget, Author, Comment, CommentForm, Loader} from "../../components";
+import {useRouter} from "next/router";
 
 const PostDetails = ({post}) => {
     console.log(post);
     console.log(post.slug);
     console.log(post.categories);
    //print all of the category to the console
+    const router = useRouter();
+
+    if (router.isFallback) {
+        return <Loader />;
+    }
 
 
     return (<div className={'container mx-auto px-10 mb-8 text-zinc-200'}>
@@ -48,7 +54,7 @@ export async function getStaticPaths() {
                 slug
             }
         })),
-        fallback: false
+        fallback: true
     }
 
 }
