@@ -31,7 +31,7 @@ const CategoryPost = ({ posts }) => {
 export default CategoryPost;
 
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const posts = await getCategoryPost(params.slug);
 
     return {
