@@ -12,7 +12,7 @@ const PostDetails = ({post}) => {
     const router = useRouter();
 
     if (router.isFallback) {
-        return <Loader />;
+        return <Loader/>;
     }
 
 
@@ -54,7 +54,7 @@ export async function getStaticPaths() {
                 slug
             }
         })),
-        fallback: true
-    }
+        fallback: true,
+    };
 
 }
