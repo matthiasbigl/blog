@@ -3,18 +3,19 @@ import {Header} from "./";
 import moment from "moment";
 import parse from "html-react-parser";
 import Image from "next/image";
+import {compileNonPath} from "next/dist/shared/lib/router/utils/prepare-destination";
 //import  RichText  from '@graphcms/rich-text-react-renderer';
 
 // @ts-ignore
 const PostDetail = ({post}) => {
     function renderImage() {
         if (post.featuredImage) {
+            console.log('image should be here');
             return (
                 <div className='relative overflow-hidden shadow-md mb-6'>
-                    <Image
+                    <img
                         src={post.featuredImage.url}
                         alt={post.title}
-                        layout='fill'
                         className='object-top h-full w-full rounded-t-lg lg:rounded-b-lg'
                     />
 
