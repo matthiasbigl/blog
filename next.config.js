@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   images:{
-    domains: ["media.graphassets.com", "sfkp.ch"],
+    domains: ["media.graphassets.com", "sfkp.ch", "s.gravatar.com"],
 
 
     dangerouslyAllowSVG: true

@@ -6,6 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.8.0",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.6.4",
     "graphql": "^16.4.0",
     "graphql-request": "^4.2.0",
     "html-react-parser": "^1.4.12",
