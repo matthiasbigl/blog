@@ -190,7 +190,7 @@ export const getCategoryPost = async (slug) => {
 
 export const getFeaturedPosts = async () => {
     const query = gql`
-        query GetCategoryPost() {
+        query GetCategoryPost {
             posts(where: {featuredPost: true}) {
                 author {
                     name
@@ -225,10 +225,12 @@ export const submitComment = async (obj) => {
     return result.json();
 };
 
+
+
 export const getComments = async (slug) => {
     const query = gql`
         query GetComments($slug:String!) {
-            comments(where: {post: {slug:$slug}}){
+            comments(where: {post:{slug: $slug}}  ){
                 name
                 createdAt
                 comment
@@ -241,9 +243,10 @@ export const getComments = async (slug) => {
     return result.comments;
 };
 
+
 export const getRecentPosts = async () => {
     const query = gql`
-        query GetPostDetails() {
+        query GetPostDetails {
             posts(
                 orderBy: createdAt_ASC
                 last: 3

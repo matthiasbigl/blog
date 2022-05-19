@@ -6,7 +6,6 @@ import {UserContext } from "../components/UserContext"
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-
     return(
         // @ts-ignore
       <UserContext.Provider value={"hello world from context"}>

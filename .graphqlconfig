@@ -1,0 +1,14 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "./schema.graphql",
+  "includes": [
+    "*"
+  ],
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://api-eu-west-2.graphcms.com/v2/cl2sze8jd35ov01w6dkoke3vp/master"
+      }
+    }
+  }
+}
