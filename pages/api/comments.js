@@ -15,9 +15,17 @@ export default async function asynchandler(req, res) {
     // create a new GraphQLClient instance
     const client = new GraphQLClient(graphqlAPI, {
         headers: {
-            authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`,
+            Authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`,
         },
     });
+    //works in development but somehow not in the production
+
+    //fix the illegal http header
+    //set the x_authorization header to the value of the authorization header
+    client.setHeader('x_authorization', `Authorization: Bearer ${process.env.GRAPHCMS_TOKEN}`);
+
+
+
 
 
     const query = gql`
@@ -25,7 +33,6 @@ export default async function asynchandler(req, res) {
             createComment(data: {name: $name, email: $email, comment: $comment, post: {connect: {slug:$slug}}}) { id }
         }
     `
-
     ;
 
 
