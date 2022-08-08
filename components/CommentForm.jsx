@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { submitComment } from '../services';
+import {useRouter} from "next/router";
 
 const CommentsForm = ({ slug }) => {
     const [error, setError] = useState(false);
     const [localStorage, setLocalStorage] = useState(null);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [formData, setFormData] = useState({ name: null, email: null, comment: null, storeData: false });
+
+    const router = useRouter();
 
     useEffect(() => {
         setLocalStorage(window.localStorage);
@@ -67,6 +70,7 @@ const CommentsForm = ({ slug }) => {
                         ...formData,
                     }));
                     setShowSuccessMessage(true);
+                    router.reload();
                     setTimeout(() => {
                         setShowSuccessMessage(false);
                     }, 3000);
@@ -93,7 +97,6 @@ const CommentsForm = ({ slug }) => {
             {error && <p className="text-xs text-red-500">All fields are mandatory</p>}
             <div className="mt-8">
                 <button type="button" onClick={handlePostSubmission} className="transition duration-500 ease hover:bg-indigo-900 inline-block bg-blue-500 text-lg font-medium rounded-full text-white px-8 py-3 cursor-pointer">Post Comment</button>
-                {showSuccessMessage && <span className="text-xl float-right font-semibold mt-3 text-green-500">Comment submitted for review</span>}
             </div>
         </div>
     );
