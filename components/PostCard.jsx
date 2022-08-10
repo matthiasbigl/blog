@@ -37,7 +37,7 @@ const PostCard = ({post}) => {
     // @ts-ignore
     return (
 
-        <div className='text-zinc-200 bg-zinc-800 shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8'>
+        <div className='text-zinc-200 bg-zinc-800 shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 break-words'>
             {renederImage()}
             <h1 className='pt-6 transition duration-400 text-center mb-8 cursor-pointer hover:translate-y-0.5 hover:text-blue-500 text-4xl font-semibold '>
                 <Link href={`/post/${post.slug}`}>
