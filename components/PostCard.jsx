@@ -14,15 +14,14 @@ const PostCard = ({post}) => {
             // @ts-ignore
             return (
 
-                <div className='bg-zinc-600 rounded-md relative overflow-hidden shadow-md pb-80 mb-6'>
+                <div className='bg-zinc-600 rounded-md relative overflow-hidden shadow-md mb-6'>
 
 
-                    <Image
-
+                    <img
                         src={post.featuredImage.url}
                         alt={post.title}
-                        layout={'fill'}
-                        className={'object-top absolute h-80 w-full object-cover shadow-lg rounded-t-lg lg:rounded-md'}
+                        className='object-top h-full w-full rounded-t-lg lg:rounded-b-lg'
+
                     />
 
                 </div>
