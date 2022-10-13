@@ -13,7 +13,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             // @ts-ignore
             <Head>
                 <meta name="google-site-verification" content="AE4xTqjFEokU4TUV2f-qhOq_IDtXIsxOrGTKe15HNO4"/>
-            </Head><Layout>
+            </Head>
+            <Layout>
             <Component {...pageProps} />
         </Layout></>
 
