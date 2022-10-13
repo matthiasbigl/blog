@@ -3,6 +3,7 @@ import {getPosts, getPostDetails} from "../../services/";
 
 import {PostDetail, Categories, PostWidget, Author, Comment, CommentForm, Loader} from "../../components";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 const PostDetails = ({post}) => {
 
