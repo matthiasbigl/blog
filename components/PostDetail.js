@@ -3,15 +3,15 @@ import {Header} from "./";
 import moment from "moment";
 import parse from "html-react-parser";
 import Image from "next/image";
-import {compileNonPath} from "next/dist/shared/lib/router/utils/prepare-destination";
 import {RichText} from "@graphcms/rich-text-react-renderer";
-//import  RichText  from '@graphcms/rich-text-react-renderer';
+
 
 // @ts-ignore
 const PostDetail = ({post}) => {
+
+    console.log(post.content)
     function renderImage() {
         if (post.featuredImage) {
-            console.log('image should be here');
             return (
                 <div className='relative overflow-hidden shadow-md mb-6'>
                     <img
@@ -58,7 +58,7 @@ const PostDetail = ({post}) => {
                     {post.title}
                 </h1>
                 <RichText
-                    content={post.content}
+                    content={post.content.raw}
                     renderers={{
                         p: ({ children }) => (
                             <p className='text-fuchsia-50 text-xl tracking-wider'>
