@@ -4,6 +4,7 @@ import moment from "moment";
 import parse from "html-react-parser";
 import Image from "next/image";
 import {compileNonPath} from "next/dist/shared/lib/router/utils/prepare-destination";
+import {RichText} from "@graphcms/rich-text-react-renderer";
 //import  RichText  from '@graphcms/rich-text-react-renderer';
 
 // @ts-ignore
@@ -56,9 +57,34 @@ const PostDetail = ({post}) => {
                 <h1 className='mb-8 text-3xl font-semibold'>
                     {post.title}
                 </h1>
-                {console.log(post.content.html)}
-                {parse(post.content.html)}
-
+                <RichText
+                    content={post.content}
+                    renderers={{
+                        p: ({ children }) => (
+                            <p className='text-fuchsia-50 text-xl tracking-wider'>
+                                {children}
+                            </p>
+                        ),
+                        ol: ({ children }) => (
+                            <ol className='list-decimal text-fuchsia-300 ml-6 my-5 text-2xl tracking-wide'>
+                                {children}
+                            </ol>
+                        ),
+                        blockquote: ({ children }) => (
+                            <div className='flex mt-10 mb-12'>
+                                <div className='h-content w-3 bg-white mr-6'></div>
+                                <div className='text-fuchsia-50 text-4xl tracking-wide'>
+                                    {children}
+                                </div>
+                            </div>
+                        ),
+                        ul: ({ children }) => (
+                            <ul className='list-disc text-fuchsia-500 text-3xl ml-6 my-5 tracking-wide'>
+                                {children}
+                            </ul>
+                        ),
+                    }}
+                />
             </div>
         </div>
     );
