@@ -12,6 +12,17 @@ export default function Home({ posts }){
             <Head>
                 <title>Bigl Blog</title>
                 <link rel="icon" href="/favicon.ico"/>
+                <meta
+                    name="description"
+                    content="A blog about software development and programming and personal random thoughts"
+                />
+                <meta
+                    name="keywords"
+                    content="software development, programming, web development, javascript, react, python, django, nextjs, gatsby, nodejs, expressjs, mongodb, postgresql, mysql, sqlite, docker, kubernetes, aws, azure, gcp, google cloud, cloud computing, serverless, microservices, devops, ci/cd, agile, scrum, kanban, tdd, bdd, ddd, clean code, clean architecture, design patterns, algorithms, data structures, data science, machine learning, artificial intelligence, deep learning, neural networks, big data, data engineering, data analytics, data visualization, business intelligence, business analytics, business analysis, business intellig, matthias bigl, htl hollabrunn,htl hl,htl-hl"
+                />
+                <meta name="author" content="Matthias Bigl"/>
+                <meta name="robots" content="index, follow"/>
+
             </Head>
             <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
                 <div className={'lg:col-span-8 col-span-1'}>
