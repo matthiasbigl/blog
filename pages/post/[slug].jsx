@@ -24,7 +24,7 @@ const PostDetails = ({post}) => {
                 />
                 <meta
                     name="keywords"
-                    content={post.categories.map((category) => category.name).join(', ')+', '+post.tags.map((tag) => tag.name).join(', ')+post.author.name}
+                    content={post.categories.map((category) => category.name).join(', ')+','+post.author.name}
                 />
                 <meta name="author" content={post.author.name}/>
 
