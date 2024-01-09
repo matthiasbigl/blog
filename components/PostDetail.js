@@ -9,7 +9,6 @@ import {RichText} from "@graphcms/rich-text-react-renderer";
 // @ts-ignore
 const PostDetail = ({post}) => {
 
-    console.log(post.content)
     function renderImage() {
         if (post.featuredImage) {
             return (
