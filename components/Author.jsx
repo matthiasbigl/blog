@@ -1,34 +1,20 @@
 import React from 'react';
-import {Header} from "./";
-import Image from "next/image";
+import Image from 'next/image';
 
-// @ts-ignore
-const Author = ({author}) => {
+const Author = ({ author }) => {
     return (
-        <div className={'text-center relative mt-20 mb-8 p-12 rounded-lg bg-zinc-800 '}>
-
-            <div className={'absolute left-0 right-0 -top-14'}>
-                <Image alt={author.name}
-
-                     height={"100px"}
-                     width={"100px"}
-                     src={author.photo.url}
-                       alt={author.name}
-                     className={'align-middle rounded-full'}
-
+        <div className="text-center mt-20 mb-8 p-12 relative rounded-md glass-panel">
+            <div className="absolute left-0 right-0 -top-14">
+                <img
+                    alt={author.name}
+                    className="align-middle rounded-full border-4 border-purple-500/30 shadow-lg mx-auto w-[100px] h-[100px]"
+                    src={author.photo.url}
                 />
-
             </div>
-            <h3 className='text-zinc-200 my-4 text-2xl font-bold'>
-                {author.name}
-            </h3>
-            <q className={'text-zinc-200 text-lg italic'}>
-                {author.bio}
-            </q>
-
-
-
+            <h3 className="text-white my-4 text-xl font-bold">{author.name}</h3>
+            <p className="text-white/70 text-lg">{author.bio}</p>
         </div>
     );
-}
+};
+
 export default Author;

@@ -1,84 +1,100 @@
 import React from 'react';
 import moment from 'moment';
 import Link from 'next/link';
-import Image from "next/image";
+import { Calendar, User } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-// @ts-ignore
-const PostCard = ({post}) => {
-    console.log(post);
-
-
-    function renederImage() {
-        if (post.featuredImage) {
-            console.log(post.image);
-            // @ts-ignore
-            return (
-
-                <div className='bg-zinc-600 rounded-md relative overflow-hidden shadow-md mb-6'>
-
-
-                    <img
-                        src={post.featuredImage.url}
-                        alt={post.title}
-                        className='object-top h-full w-full rounded-t-lg lg:rounded-b-lg'
-
-                    />
-
-                </div>
-            );
-
-        }
+// Helper to generate a consistent gradient based on string
+const stringToGradient = (str) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
+    const c1 = (hash & 0x00FFFFFF).toString(16).toUpperCase();
+    const c2 = ((hash * 2) & 0x00FFFFFF).toString(16).toUpperCase();
+    return `linear-gradient(135deg, #${"00000".substring(0, 6 - c1.length) + c1}, #${"00000".substring(0, 6 - c2.length) + c2})`;
+};
 
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
+const PostCard = ({ post }) => {
+    const hasImage = post.featuredImage?.url;
+
     return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ y: -5 }}
+            className="relative group mb-8"
+        >
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-md opacity-20 group-hover:opacity-100 transition duration-500 blur-lg group-hover:blur-xl"></div>
+            <div className="relative bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-md overflow-hidden shadow-lg">
 
-        <div className='text-zinc-200 bg-zinc-800 shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 break-words'>
-            {renederImage()}
-            <h1 className='pt-6 transition duration-400 text-center mb-8 cursor-pointer hover:translate-y-0.5 hover:text-blue-500 text-4xl font-semibold '>
-                <Link href={`/post/${post.slug}`}>
-                    {post.title}
-                </Link>
-            </h1>
-            <div className='block lg:flex text-center item-center justify-center mb-8 w-full'>
-                <div className='flex items-center justify-center mb-4 lg:mb-0 lg:w-auto mr-8'>
-                    <Image
-                        alt={post.author.name}
-                        height="40px"
-                        width="40px"
-                        className={'align-middle rounded-full mr-2'}
-                        src={post.author.photo.url}
+                {/* Image Section */}
+                <div className="relative h-64 lg:h-80 overflow-hidden">
+                    {hasImage ? (
+                        <img
+                            src={post.featuredImage.url}
+                            alt={post.title}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                    ) : (
+                        <div
+                            className="absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-105"
+                            style={{ background: stringToGradient(post.title) }}
+                        />
+                    )}
 
-                    />
-                    <p className='inline align-middle ml-2 text-lg'>
-                        {post.author.name}
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/80 via-transparent to-transparent opacity-60"></div>
+
+                    <div className="absolute top-4 left-4">
+                        <span className="bg-dark-bg/80 backdrop-blur-md border border-dark-border text-dark-text text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wide">
+                            {post.categories[0]?.name}
+                        </span>
+                    </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6 lg:p-8">
+                    <div className="flex items-center mb-4 text-sm text-light-muted dark:text-dark-muted space-x-4">
+                        <div className="flex items-center">
+                            <img
+                                alt={post.author.name}
+                                className="w-6 h-6 rounded-full mr-2 object-cover border border-light-border dark:border-dark-border"
+                                src={post.author.photo.url}
+                            />
+                            <span>{post.author.name}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-2 text-primary dark:text-dark-muted" />
+                            <span>{moment(post.createdAt).format('MMM DD, YYYY')}</span>
+                        </div>
+                    </div>
+
+                    <Link href={`/post/${post.slug}`}>
+                        <h1 className="text-2xl lg:text-3xl font-bold text-light-text dark:text-dark-text mb-4 hover:text-primary dark:hover:text-dark-muted transition-colors duration-300 cursor-pointer leading-tight">
+                            {post.title}
+                        </h1>
+                    </Link>
+
+                    <p className="text-light-text/80 dark:text-dark-text/80 text-base lg:text-lg font-light leading-relaxed mb-6 line-clamp-3 font-serif">
+                        {post.excerpt}
                     </p>
-                </div>
-                <div className='font-medium '>
-                    <svg className="inline align-middle w-8 h-8 " fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <span className='inline align-middle ml-2 text-lg'>
-                        {moment(post.publishedAt).format('MMMM Do YYYY')}
-                    </span>
+
+                    <div className="flex items-center justify-between">
+                        <Link href={`/post/${post.slug}`}>
+                            <span className="inline-flex items-center text-primary dark:text-dark-muted font-semibold hover:opacity-80 transition-opacity cursor-pointer group/link">
+                                Read Article
+                                <svg className="w-4 h-4 ml-2 transform group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </span>
+                        </Link>
+                    </div>
                 </div>
             </div>
-            <p className='text-lg text-center text-zinc-200'>
-                {post.excerpt}
-            </p>
-            <div className='text-center text-md'>
-                <Link href={`/post/${post.slug}`}>
-                    <a className='inline-block bg-zinc-800 text-white text-lg font-semibold rounded-full px-6 py-3 mt-6 hover:translate-y-1 hover:bg-zinc-600 hover:text-blue-500 transition duration-400'>
-                        Read More
-                    </a>
-                </Link>
-            </div>
-        </div>
+        </motion.div>
     );
-}
+};
+
 export default PostCard;

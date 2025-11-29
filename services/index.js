@@ -2,47 +2,49 @@ import { request, gql } from 'graphql-request';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
-export const getPosts = async () => {
-
+export const getPosts = async (skip = 0, first = 12) => {
     const query = gql`
-        query MyQuery {
-            postsConnection(
-                orderBy:createdAt_DESC
-            ) {
-                edges {
-                    cursor
-                    node {
-                        author {
-                            bio
-                            name
-                            id
-                            photo {
-                                url
-                            }
-                        }
-                        createdAt
-                        slug
-                        title
-                        excerpt
-                        featuredImage {
-                            url
-                        }
-                        categories {
-                            name
-                            slug
-                        }
-                    }
-                }
+    query MyQuery($skip: Int!, $first: Int!) {
+      postsConnection(
+        orderBy: createdAt_DESC
+        skip: $skip
+        first: $first
+      ) {
+        edges {
+          cursor
+          node {
+            author {
+              bio
+              name
+              id
+              photo {
+                url
+              }
             }
+            createdAt
+            slug
+            title
+            excerpt
+            featuredImage {
+              url
+            }
+            categories {
+              name
+              slug
+            }
+          }
         }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+  `;
 
-    `;
+    const result = await request(graphqlAPI, query, { skip, first });
 
-    const result = await request(graphqlAPI, query);
-
-
-
-    return result.postsConnection.edges;
+    return result.postsConnection;
 };
 
 export const getCategories = async () => {

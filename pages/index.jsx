@@ -1,59 +1,97 @@
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import { PostCard, Categories, PostWidget, BentoGrid, Loader } from '../components';
+import { getPosts } from '../services';
+import SEO from '../components/SEO';
+import { useInView } from 'react-intersection-observer';
 
-import Head from 'next/head'
-import {PostCard, PostWidget, Categories} from "../components";
-import {getPosts} from "../services";
+const Home = ({ initialPosts, pageInfo }) => {
+    const [posts, setPosts] = useState(initialPosts || []);
+    const [hasNextPage, setHasNextPage] = useState(pageInfo?.hasNextPage || false);
+    const [loading, setLoading] = useState(false);
+    const { ref, inView } = useInView();
 
+    const loadMorePosts = async () => {
+        if (loading || !hasNextPage) return;
 
+        setLoading(true);
+        try {
+            // Skip the current number of posts
+            const result = await getPosts(posts.length, 8);
 
+            setPosts((prev) => [...prev, ...result.edges]);
+            setHasNextPage(result.pageInfo.hasNextPage);
+        } catch (error) {
+            console.error("Error loading more posts:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-export default function Home({ posts }){
+    useEffect(() => {
+        if (inView && hasNextPage) {
+            loadMorePosts();
+        }
+    }, [inView, hasNextPage]);
+
     return (
-        <div className="container mx-auto px-10 mb-8 ">
-            <Head>
-                <title>Bigl Blog</title>
-                <link rel="icon" href="/favicon.ico"/>
-                <meta
-                    name="description"
-                    content="A blog about software development and programming and personal random thoughts"
-                />
-                <meta
-                    name="keywords"
-                    content="software development, programming, web development, javascript, react, python, django, nextjs, gatsby, nodejs, expressjs, mongodb, postgresql, mysql, sqlite, docker, kubernetes, aws, azure, gcp, google cloud, cloud computing, serverless, microservices, devops, ci/cd, agile, scrum, kanban, tdd, bdd, ddd, clean code, clean architecture, design patterns, algorithms, data structures, data science, machine learning, artificial intelligence, deep learning, neural networks, big data, data engineering, data analytics, data visualization, business intelligence, business analytics, business analysis, business intellig, matthias bigl, htl hollabrunn,htl hl,htl-hl"
-                />
-                <meta name="author" content="Matthias Bigl"/>
-                <meta name="robots" content="index, follow"/>
+        <div className="bg-light-bg dark:bg-dark-bg min-h-screen transition-colors duration-300">
+            <SEO
+                title="Home"
+                description="Welcome to my blog"
+            />
+            <div className="container mx-auto px-4 lg:px-8 mb-8">
 
-            </Head>
-            <div className='grid grid-cols-1 lg:grid-cols-12 gap-12'>
-                <div className={'lg:col-span-8 col-span-1'}>
-                    {posts.map((post) => (
-                        <PostCard key={post.title} post={post.node}/>
-                    ))}
+                {/* Bento Grid for Top Posts */}
+                <div className="mb-12">
+                    <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4 font-sans shadow-sm">Featured Stories</h2>
+                    <BentoGrid posts={posts.map(p => p.node)} />
                 </div>
 
-                <div className={'lg:col-span-4 col-span-1'}>
-                    <div className={'lg:sticky relative top-8'}>
-                        <PostWidget slug={null}/>
-                        <Categories/>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <div className="col-span-1 lg:col-span-8">
+                        <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4 font-sans shadow-sm">Latest Articles</h2>
+
+                        {posts.map((post, index) => (
+                            <PostCard key={`${post.node.slug}-${index}`} post={post.node} />
+                        ))}
+
+                        {/* Loading Trigger */}
+                        {hasNextPage && (
+                            <div ref={ref} className="flex justify-center py-8">
+                                {loading ? <Loader /> : <span className="text-dark-text/50 dark:text-white/50">Loading more...</span>}
+                            </div>
+                        )}
+
+                        {!hasNextPage && posts.length > 0 && (
+                            <div className="text-center py-8 text-dark-text/50 dark:text-white/50">
+                                You've reached the end!
+                            </div>
+                        )}
                     </div>
 
+                    <div className="col-span-1 lg:col-span-4">
+                        <div className="relative lg:sticky top-24">
+                            <PostWidget />
+                            <Categories />
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
+    );
+};
 
-    )
+export default Home;
 
-}
-//get the ininitial data
-export async function getServerSideProps() {
-    const posts = (await getPosts())||[];
+export async function getStaticProps() {
+    const result = (await getPosts(0, 12)) || {};
+
     return {
         props: {
-            posts
-        }
-    }
+            initialPosts: result.edges || [],
+            pageInfo: result.pageInfo || { hasNextPage: false }
+        },
+        revalidate: 60, // Revalidate every 60 seconds
+    };
 }
-//test
-
-

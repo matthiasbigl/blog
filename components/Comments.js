@@ -1,47 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import parse from 'html-react-parser';
-
 import { getComments } from '../services';
 
 const Comments = ({ slug }) => {
-
-
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        getComments(slug).then((result) => {
-            setComments(result);
-        });
-    }, []);
+        getComments(slug).then((result) => setComments(result));
+    }, [slug]);
+
+    if (!comments || comments.length === 0) {
+        return null;
+    }
 
     return (
-        <>
-            {comments.length > 0 && (
-                <div className="bg-zinc-800 text-white shadow-lg drop-shadow-lg rounded-lg p-8  mb-8 ">
-                    <h3 className="text-xl font-semibold pb-4">
-                        {comments.length}
-                        {' '}
-                        Comments
-                    </h3>
-                    {comments.map((comment, index) => (
-                        <div key={index} className="text-xl py-2 text-zinc-100">
-                            <div className="rounded-lg bg-gray-600 p-4 ">
-                                <p className="mb-4">
-                                    <span className="font-semibold">{comment.name}</span>
-                                    {' '}
-                                    on
-                                    {' '}
-                                    {moment(comment.createdAt).format('MMM DD, YYYY')}
-                                </p>
-                                <p className="whitespace-pre-line w-full ml-2 text-lg">{parse(comment.comment)}</p>
-
-                            </div>
-                            </div>
-                    ))}
+        <div className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 mb-8 border border-light-border dark:border-dark-border">
+            <h3 className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">
+                {comments.length} Comments
+            </h3>
+            {comments.map((comment) => (
+                <div key={comment.createdAt} className="border-b border-light-border dark:border-dark-border mb-4 pb-4 last:border-0 last:mb-0">
+                    <p className="mb-4 text-light-text dark:text-dark-text">
+                        <span className="font-semibold text-primary">{comment.name}</span>{' '}
+                        <span className="text-light-muted dark:text-dark-muted text-sm">
+                            on {moment(comment.createdAt).format('MMM DD, YYYY')}
+                        </span>
+                    </p>
+                    <div className="whitespace-pre-line text-light-text dark:text-dark-text w-full">
+                        {parse(comment.comment)}
+                    </div>
                 </div>
-            )}
-        </>
+            ))}
+        </div>
     );
 };
 
