@@ -9,13 +9,15 @@ const PostDetail = ({ post }) => {
         <>
             <ScrollProgress />
             <div className="bg-light-card dark:bg-dark-card rounded-md lg:p-12 pb-12 mb-8 shadow-lg border border-light-border dark:border-dark-border">
-                <div className="relative overflow-hidden shadow-md mb-6 rounded-t-md lg:rounded-md h-96">
-                    <img
-                        src={post.featuredImage.url}
-                        alt={post.title}
-                        className="object-cover h-full w-full rounded-t-md lg:rounded-md shadow-lg"
-                    />
-                </div>
+                {post.featuredImage && (
+                    <div className="relative overflow-hidden shadow-md mb-6 rounded-t-md lg:rounded-md h-96">
+                        <img
+                            src={post.featuredImage.url}
+                            alt={post.title}
+                            className="object-cover h-full w-full rounded-t-md lg:rounded-md shadow-lg"
+                        />
+                    </div>
+                )}
                 <div className="px-4 lg:px-0">
                     <div className="flex items-center mb-8 w-full">
                         <div className="flex items-center mb-4 lg:mb-0 w-full lg:w-auto mr-8">

@@ -17,7 +17,7 @@ const PostDetails = ({ post }) => {
             <SEO
                 title={post.title}
                 description={post.excerpt}
-                image={post.featuredImage.url}
+                image={post.featuredImage?.url ? post.featuredImage.url : ''}
                 slug={`post/${post.slug}`}
             />
             <div className="container mx-auto px-4 lg:px-8 mb-8">
