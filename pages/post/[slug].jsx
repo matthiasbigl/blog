@@ -20,13 +20,15 @@ const PostDetails = ({ post }) => {
                 image={post.featuredImage?.url ? post.featuredImage.url : ''}
                 slug={`post/${post.slug}`}
             />
-            <div className="container mx-auto px-4 lg:px-8 mb-8">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:container lg:mx-auto lg:px-8 mb-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-12">
                     <div className="col-span-1 lg:col-span-8">
                         <PostDetail post={post} />
-                        <Author author={post.author} />
-                        <CommentForm slug={post.slug} />
-                        <Comments slug={post.slug} />
+                        <div className="px-4 lg:px-0">
+                            <Author author={post.author} />
+                            <CommentForm slug={post.slug} />
+                            <Comments slug={post.slug} />
+                        </div>
                     </div>
                     <div className="col-span-1 lg:col-span-4">
                         <div className="relative lg:sticky top-24">

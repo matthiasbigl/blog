@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { PostCard, Categories, PostWidget, BentoGrid, Loader } from '../components';
+import { PostCard, Categories, PostWidget, FeaturedPosts, Loader } from '../components';
 import { getPosts } from '../services';
 import SEO from '../components/SEO';
 import { useInView } from 'react-intersection-observer';
@@ -40,17 +40,16 @@ const Home = ({ initialPosts, pageInfo }) => {
                 title="Home"
                 description="Welcome to my blog"
             />
-            <div className="container mx-auto px-4 lg:px-8 mb-8">
+            <div className="container mx-auto px-2 lg:px-8 mb-8">
 
-                {/* Bento Grid for Top Posts */}
-                <div className="mb-12">
-                    <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4 font-sans shadow-sm">Featured Stories</h2>
-                    <BentoGrid posts={posts.map(p => p.node)} />
+                {/* Featured Posts Section */}
+                <div className="mb-12 mt-8">
+                    <FeaturedPosts posts={posts.map(p => p.node)} />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     <div className="col-span-1 lg:col-span-8">
-                        <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4 font-sans shadow-sm">Latest Articles</h2>
+                        <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4">Latest Articles</h2>
 
                         {posts.map((post, index) => (
                             <PostCard key={`${post.node.slug}-${index}`} post={post.node} />
@@ -59,19 +58,19 @@ const Home = ({ initialPosts, pageInfo }) => {
                         {/* Loading Trigger */}
                         {hasNextPage && (
                             <div ref={ref} className="flex justify-center py-8">
-                                {loading ? <Loader /> : <span className="text-dark-text/50 dark:text-white/50">Loading more...</span>}
+                                {loading ? <Loader /> : <span className="text-light-muted dark:text-dark-muted">Loading more...</span>}
                             </div>
                         )}
 
                         {!hasNextPage && posts.length > 0 && (
-                            <div className="text-center py-8 text-dark-text/50 dark:text-white/50">
+                            <div className="text-center py-8 text-light-muted dark:text-dark-muted">
                                 You've reached the end!
                             </div>
                         )}
                     </div>
 
                     <div className="col-span-1 lg:col-span-4">
-                        <div className="relative lg:sticky top-24">
+                        <div className="lg:sticky lg:top-24 space-y-8">
                             <PostWidget />
                             <Categories />
                         </div>

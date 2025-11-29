@@ -31,11 +31,11 @@ const PostWidget = ({ categories, slug }) => {
                         />
                     </div>
                     <div className="flex-grow ml-4">
-                        <p className="text-light-muted dark:text-dark-muted font-xs">
+                        <p className="text-light-muted dark:text-dark-muted text-xs">
                             {moment(post.createdAt).format('MMM DD, YYYY')}
                         </p>
                         <Link href={`/post/${post.slug}`} className="text-md text-light-text dark:text-dark-text hover:text-primary dark:hover:text-dark-muted transition-colors">
-                            {post.title}
+                            {post.title.length > 32 ? post.title.substring(0, 32) + '...' : post.title}
                         </Link>
                     </div>
                 </div>

@@ -16,3 +16,5 @@ export { default as ScrollProgress } from './ScrollProgress';
 export { default as ThemeToggle } from './ThemeToggle';
 export { default as Search } from './Search';
 export { default as Footer } from './Footer';
+export { default as FeaturedPosts } from './FeaturedPosts';
+
