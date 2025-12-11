@@ -19,6 +19,10 @@ const PostDetails = ({ post }) => {
                 description={post.excerpt}
                 image={post.featuredImage?.url ? post.featuredImage.url : ''}
                 slug={`post/${post.slug}`}
+                article={true}
+                publishedTime={post.createdAt}
+                modifiedTime={post.updatedAt}
+                tags={post.categories?.map(cat => cat.name) || []}
             />
             <div className="lg:container lg:mx-auto lg:px-8 mb-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-12">

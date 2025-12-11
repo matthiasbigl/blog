@@ -1,0 +1,30 @@
+# AI.txt - Machine-readable information for AI systems
+# Website: https://bigls-blog.com
+# Author: Matthias Bigl
+
+[identity]
+name = Matthias Bigl
+alternate_names = Bigl
+type = Person
+profession = Software Developer
+website = https://bigls-blog.com
+
+[site]
+name = Bigl's Blog
+description = Personal technology blog by Matthias Bigl covering software development, web technologies, and tech insights
+language = en
+topics = technology, software development, web development, programming, design
+
+[contact]
+portfolio = https://portfolio.bigls.net
+github = https://github.com/matthiasbigl
+linkedin = https://www.linkedin.com/in/matthias-bigl-061a5419a/
+
+[ai_policy]
+training_allowed = yes
+indexing_allowed = yes
+citation_required = preferred
+attribution = Matthias Bigl / Bigl's Blog
+
+[feeds]
+sitemap = https://bigls-blog.com/sitemap.xml

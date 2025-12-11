@@ -37,8 +37,9 @@ const Home = ({ initialPosts, pageInfo }) => {
     return (
         <div className="bg-light-bg dark:bg-dark-bg min-h-screen transition-colors duration-300">
             <SEO
-                title="Home"
-                description="Welcome to my blog"
+                title="Technology & Development Blog"
+                description="Welcome to Bigl's Blog by Matthias Bigl - Your source for insightful articles on technology, software development, web development, and innovation. Join Bigl on a journey through the tech world."
+                tags={['Matthias Bigl', 'Bigl', 'tech blog', 'software development', 'web development', 'programming', 'technology blog']}
             />
             <div className="container mx-auto px-2 lg:px-8 mb-8">
 
@@ -49,7 +50,9 @@ const Home = ({ initialPosts, pageInfo }) => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     <div className="col-span-1 lg:col-span-8">
-                        <h2 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4">Latest Articles</h2>
+                        <h1 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4">
+                            Latest Articles by Matthias Bigl
+                        </h1>
 
                         {posts.map((post, index) => (
                             <PostCard key={`${post.node.slug}-${index}`} post={post.node} />

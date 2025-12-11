@@ -1,0 +1,19 @@
+/* TEAM */
+Author: Matthias Bigl
+Nickname: Bigl
+Site: https://bigls-blog.com
+Portfolio: https://portfolio.bigls.net
+GitHub: https://github.com/matthiasbigl
+LinkedIn: https://www.linkedin.com/in/matthias-bigl-061a5419a/
+Location: Austria
+
+/* SITE */
+Name: Bigl's Blog
+Description: Personal technology blog by Matthias Bigl
+Language: English
+Standards: HTML5, CSS3, JavaScript
+Components: React, Next.js, Tailwind CSS
+Software: VS Code, Git
+
+/* LAST UPDATE */
+2025-12-11

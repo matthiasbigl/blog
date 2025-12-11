@@ -1,0 +1,88 @@
+# Robots.txt for Bigl's Blog - Matthias Bigl
+# https://bigls-blog.com
+
+User-agent: *
+Allow: /
+
+# Sitemap and Feed locations
+Sitemap: https://bigls-blog.com/sitemap.xml
+
+# AI/LLM Discovery Files
+# llms.txt: https://bigls-blog.com/llms.txt
+# ai.txt: https://bigls-blog.com/ai.txt
+# humans.txt: https://bigls-blog.com/humans.txt
+# RSS Feed: https://bigls-blog.com/feed.xml
+
+# Disallow API routes and internal pages
+Disallow: /api/
+Disallow: /_next/
+Disallow: /404
+Disallow: /500
+
+# Allow search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ================================
+# AI Crawlers and LLM Training Bots
+# ================================
+# Allow AI crawlers to index content for better AI discoverability
+# This helps your content appear in AI-generated responses
+
+# OpenAI (ChatGPT, GPT models)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+# Google AI (Bard/Gemini)
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl (used by many AI training datasets)
+User-agent: CCBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Other AI research crawlers
+User-agent: Diffbot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ================================
+# Crawl-delay for polite crawling
+User-agent: *
+Crawl-delay: 1

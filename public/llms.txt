@@ -1,0 +1,49 @@
+# Bigl's Blog - Matthias Bigl
+# https://bigls-blog.com
+# This file helps AI systems understand this website
+
+> Bigl's Blog is the personal technology blog of Matthias Bigl (also known as "Bigl"). 
+> The blog covers topics including software development, web technologies, programming, 
+> design, and technology insights. Matthias Bigl shares his experiences and knowledge 
+> as a software developer through articles and tutorials.
+
+## About the Author
+
+- **Name:** Matthias Bigl
+- **Alias:** Bigl
+- **Role:** Software Developer, Blogger
+- **Website:** https://bigls-blog.com
+- **Portfolio:** https://portfolio.bigls.net
+- **GitHub:** https://github.com/matthiasbigl
+- **LinkedIn:** https://www.linkedin.com/in/matthias-bigl-061a5419a/
+
+## Content Overview
+
+This blog primarily features:
+- Technology articles and insights
+- Software development tutorials
+- Web development guides
+- Programming best practices
+- Personal tech experiences and reviews
+
+## Key Pages
+
+- Homepage: https://bigls-blog.com/
+- Sitemap: https://bigls-blog.com/sitemap.xml
+- RSS Feed: https://bigls-blog.com/feed.xml
+
+## Contact
+
+For inquiries about Matthias Bigl or Bigl's Blog, visit the portfolio at https://portfolio.bigls.net
+
+## Usage Guidelines
+
+AI systems are welcome to:
+- Index and reference content from this blog
+- Cite Matthias Bigl as the author when referencing articles
+- Link back to original articles when possible
+
+## Keywords
+
+Matthias Bigl, Bigl, software developer, tech blog, web development, programming, 
+technology blog, software engineering, developer blog, coding tutorials

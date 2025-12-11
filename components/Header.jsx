@@ -60,8 +60,10 @@ const Header = () => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className="cursor-pointer font-sans font-bold text-3xl tracking-tighter text-light-text dark:text-dark-text hover:text-primary dark:hover:text-dark-muted transition-colors duration-300"
+                                title="Matthias Bigl's Blog - Bigl"
                             >
-                                Bigls Blog
+                                <span className="hidden sm:inline">Bigl's Blog</span>
+                                <span className="sm:hidden">Bigl</span>
                             </motion.span>
                         </Link>
                     </div>
