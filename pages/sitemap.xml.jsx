@@ -1,6 +1,6 @@
 import { getPosts } from '../services';
 
-const SITE_URL = 'https://bigls-blog.com';
+const SITE_URL = 'https://blog.bigls.net';
 
 function generateSiteMap(posts) {
     return `<?xml version="1.0" encoding="UTF-8"?>
@@ -19,8 +19,8 @@ function generateSiteMap(posts) {
     
     <!-- Blog Posts -->
     ${posts
-        .map(({ node }) => {
-            return `
+            .map(({ node }) => {
+                return `
     <url>
         <loc>${SITE_URL}/post/${node.slug}</loc>
         <lastmod>${node.updatedAt || node.createdAt}</lastmod>
@@ -32,8 +32,8 @@ function generateSiteMap(posts) {
             <image:title>${node.title}</image:title>
         </image:image>` : ''}
     </url>`;
-        })
-        .join('')}
+            })
+            .join('')}
 </urlset>`;
 }
 

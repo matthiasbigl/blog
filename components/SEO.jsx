@@ -7,17 +7,17 @@ const SEO = ({ title, description, image, slug, article, publishedTime, modified
     const siteTitle = 'Bigl\'s Blog';
     const authorName = 'Matthias Bigl';
     const defaultDescription = 'Personal blog by Matthias Bigl (Bigl) - Exploring technology, software development, design, and innovation. Follow Bigl\'s journey through the tech world.';
-    const siteUrl = 'https://bigls-blog.com';
+    const siteUrl = 'https://blog.bigls.net';
     const currentUrl = `${siteUrl}/${slug || ''}`;
     const defaultImage = `${siteUrl}/og-image.png`;
     const twitterHandle = '@matthiasbigl';
-    
+
     // Keywords for SEO
     const defaultKeywords = 'Matthias Bigl, Bigl, Matthias Bigl blog, Bigl blog, tech blog, software development, web development, programming, technology';
-    
+
     // Generate full title
-    const fullTitle = title 
-        ? `${title} | ${siteTitle} - Matthias Bigl` 
+    const fullTitle = title
+        ? `${title} | ${siteTitle} - Matthias Bigl`
         : `${siteTitle} - Matthias Bigl | Technology & Development Blog`;
 
     // Structured Data - Person Schema for author branding
@@ -107,10 +107,10 @@ const SEO = ({ title, description, image, slug, article, publishedTime, modified
             <meta name="publisher" content={authorName} />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-            
+
             {/* Canonical URL */}
             <link rel="canonical" href={currentUrl} />
-            
+
             {/* Language and Locale */}
             <meta httpEquiv="content-language" content="en" />
             <meta name="language" content="English" />
@@ -124,7 +124,7 @@ const SEO = ({ title, description, image, slug, article, publishedTime, modified
             <meta property="og:image:alt" content={title || siteName} />
             <meta property="og:site_name" content={siteName} />
             <meta property="og:locale" content="en_US" />
-            
+
             {/* Article specific OG tags */}
             {article && publishedTime && (
                 <meta property="article:published_time" content={publishedTime} />
@@ -155,7 +155,7 @@ const SEO = ({ title, description, image, slug, article, publishedTime, modified
             <meta name="ai-indexing" content="allowed" />
             <meta name="llms-txt" content={`${siteUrl}/llms.txt`} />
             <meta name="ai-txt" content={`${siteUrl}/ai.txt`} />
-            
+
             {/* Citation hints for AI systems */}
             <meta name="citation_author" content={authorName} />
             <meta name="citation_title" content={fullTitle} />
@@ -181,7 +181,7 @@ const SEO = ({ title, description, image, slug, article, publishedTime, modified
             {/* Additional SEO Tags */}
             <meta name="theme-color" content="#1a1a2e" />
             <meta name="msapplication-TileColor" content="#1a1a2e" />
-            
+
             {/* Preconnect for performance */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

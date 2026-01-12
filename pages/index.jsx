@@ -38,7 +38,7 @@ const Home = ({ initialPosts, pageInfo }) => {
         <div className="bg-light-bg dark:bg-dark-bg min-h-screen transition-colors duration-300">
             <SEO
                 title="Technology & Development Blog"
-                description="Welcome to Bigl's Blog by Matthias Bigl - Your source for insightful articles on technology, software development, web development, and innovation. Join Bigl on a journey through the tech world."
+                description="Welcome to Bigl's Blog by Matthias Bigl - Your source for insightful articles on technology, software development, web development, and innovation. "
                 tags={['Matthias Bigl', 'Bigl', 'tech blog', 'software development', 'web development', 'programming', 'technology blog']}
             />
             <div className="container mx-auto px-2 lg:px-8 mb-8">

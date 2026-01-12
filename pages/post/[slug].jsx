@@ -49,18 +49,55 @@ const PostDetails = ({ post }) => {
 export default PostDetails;
 
 export async function getStaticProps({ params }) {
-    const data = await getPostDetails(params.slug);
-    return {
-        props: {
-            post: data,
-        },
-    };
+    // Make getPostDetails resilient to rate limits (429) by retrying a few times
+    const maxRetries = 3;
+    let attempt = 0;
+    while (attempt < maxRetries) {
+        try {
+            const data = await getPostDetails(params.slug);
+            if (!data) {
+                return { notFound: true, revalidate: 60 };
+            }
+            return {
+                props: {
+                    post: data,
+                },
+                // Use ISR so if data changes we can pick it up
+                revalidate: 60,
+            };
+        } catch (error) {
+            attempt += 1;
+            const status = error?.response?.status || error?.request?.status || null;
+            // If rate limited, wait and retry with exponential backoff
+            if (status === 429 && attempt < maxRetries) {
+                const waitMs = 500 * Math.pow(2, attempt - 1);
+                // eslint-disable-next-line no-await-in-loop
+                await new Promise((res) => setTimeout(res, waitMs));
+                continue;
+            }
+
+            // For other errors or exhausted retries, avoid failing the whole build.
+            // Return notFound so Next can continue the build and optionally render on demand.
+            // Log the error to help debugging in CI logs.
+            // eslint-disable-next-line no-console
+            console.warn(`getStaticProps error for slug=${params.slug}:`, (error && (error.message || JSON.stringify(error))) || error);
+            return { notFound: true, revalidate: 60 };
+        }
+    }
+    // Fallback if loop exits unexpectedly
+    return { notFound: true, revalidate: 60 };
 }
 
 export async function getStaticPaths() {
-    const posts = await getPosts();
+    // Only pre-render a small recent subset to avoid rate-limiting during build.
+    // Other pages will be generated on demand (blocking) when first requested.
+    const previewCount = 20;
+    const posts = await getPosts(0, previewCount);
+    const paths = (posts?.edges || []).map(({ node: { slug } }) => ({ params: { slug } }));
     return {
-        paths: posts.edges.map(({ node: { slug } }) => ({ params: { slug } })),
-        fallback: true,
+        paths,
+        // Use blocking so that pages not returned here are rendered on first request
+        // instead of causing a 404 during build or requiring client-side fallback.
+        fallback: 'blocking',
     };
 }

@@ -1,17 +1,17 @@
 # Robots.txt for Bigl's Blog - Matthias Bigl
-# https://bigls-blog.com
+# https://blog.bigls.net
 
 User-agent: *
 Allow: /
 
 # Sitemap and Feed locations
-Sitemap: https://bigls-blog.com/sitemap.xml
+Sitemap: https://blog.bigls.net/sitemap.xml
 
 # AI/LLM Discovery Files
-# llms.txt: https://bigls-blog.com/llms.txt
-# ai.txt: https://bigls-blog.com/ai.txt
-# humans.txt: https://bigls-blog.com/humans.txt
-# RSS Feed: https://bigls-blog.com/feed.xml
+# llms.txt: https://blog.bigls.net/llms.txt
+# ai.txt: https://blog.bigls.net/ai.txt
+# humans.txt: https://blog.bigls.net/humans.txt
+# RSS Feed: https://blog.bigls.net/feed.xml
 
 # Disallow API routes and internal pages
 Disallow: /api/
