@@ -46,7 +46,7 @@ const Header = () => {
     };
 
     return (
-        <motion.div
+        <motion.header
             initial="hidden"
             animate="visible"
             variants={headerVariants}
@@ -67,7 +67,7 @@ const Header = () => {
                             </motion.span>
                         </Link>
                     </div>
-                    <div className="hidden md:flex items-center space-x-6">
+                    <nav className="hidden md:flex items-center space-x-6" aria-label="Main Navigation">
                         {categories.map((category, i) => (
                             <Link key={category.slug} href={`/category/${category.slug}`}>
                                 <motion.span
@@ -91,11 +91,11 @@ const Header = () => {
                         </button>
 
                         <ThemeToggle />
-                    </div>
+                    </nav>
                 </div>
             </div>
             <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-        </motion.div>
+        </motion.header>
     );
 };
 

@@ -34,7 +34,7 @@ const BentoGrid = ({ posts }) => {
                 const hasImage = post.featuredImage?.url;
 
                 return (
-                    <motion.div
+                    <motion.article
                         key={post.slug}
                         className={`relative group overflow-hidden rounded-md cursor-pointer ${spanClass} shadow-md border border-light-border dark:border-dark-border`}
                         initial={{ opacity: 0, y: 20 }}
@@ -65,10 +65,10 @@ const BentoGrid = ({ posts }) => {
                                         <span className="bg-dark-bg/80 px-2 py-1 rounded-sm backdrop-blur-sm border border-dark-border">
                                             {post.categories[0]?.name || 'Blog'}
                                         </span>
-                                        <span className="flex items-center text-dark-text/80">
+                                        <time dateTime={post.createdAt} className="flex items-center text-dark-text/80">
                                             <Calendar className="w-3 h-3 mr-1" />
                                             {moment(post.createdAt).format('MMM DD')}
-                                        </span>
+                                        </time>
                                     </div>
                                     <h3 className={`font-bold text-dark-text leading-tight mb-2 ${index === 0 ? 'text-3xl' : 'text-xl'} text-shadow-sm`}> {/* added text shadow */}
                                         {post.title}
@@ -80,7 +80,7 @@ const BentoGrid = ({ posts }) => {
                                 </div>
                             </div>
                         </Link>
-                    </motion.div>
+                    </motion.article>
                 );
             })}
         </div>

@@ -47,8 +47,8 @@ const CommentForm = ({ slug }) => {
     };
 
     return (
-        <div className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 pb-12 mb-8 border border-light-border dark:border-dark-border">
-            <h3 className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">Leave a Reply</h3>
+        <section className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 pb-12 mb-8 border border-light-border dark:border-dark-border" aria-labelledby="comment-form-title">
+            <h3 id="comment-form-title" className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">Leave a Reply</h3>
             <div className="grid grid-cols-1 gap-4 mb-4">
                 <textarea
                     ref={commentEl}
@@ -88,7 +88,7 @@ const CommentForm = ({ slug }) => {
                 </button>
                 {showSuccessMessage && <span className="text-xl float-right font-semibold mt-3 text-green-500">Comment submitted for review</span>}
             </div>
-        </div>
+        </section>
     );
 };
 

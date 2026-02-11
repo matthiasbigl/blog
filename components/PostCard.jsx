@@ -9,7 +9,7 @@ const PostCard = ({ post }) => {
     const hasImage = Boolean(post?.featuredImage?.url);
 
     return (
-        <motion.div
+        <motion.article
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -48,15 +48,15 @@ const PostCard = ({ post }) => {
                         </div>
                         <div className="flex items-center">
                             <Calendar className="w-4 h-4 mr-2 text-primary dark:text-dark-muted" />
-                            <span>{moment(post.createdAt).format('MMM DD, YYYY')}</span>
+                            <time dateTime={post.createdAt}>{moment(post.createdAt).format('MMM DD, YYYY')}</time>
                         </div>
                     </div>
 
                     {/* Title */}
                     <Link href={`/post/${post.slug}`}>
-                        <h1 className="text-2xl lg:text-3xl font-bold text-light-text dark:text-dark-text mb-4 hover:text-primary dark:hover:text-dark-muted transition-colors duration-300 cursor-pointer leading-tight">
+                        <h2 className="text-2xl lg:text-3xl font-bold text-light-text dark:text-dark-text mb-4 hover:text-primary dark:hover:text-dark-muted transition-colors duration-300 cursor-pointer leading-tight">
                             {post.title}
-                        </h1>
+                        </h2>
                     </Link>
 
                     {/* Excerpt */}
@@ -82,7 +82,7 @@ const PostCard = ({ post }) => {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </motion.article>
     );
 };
 

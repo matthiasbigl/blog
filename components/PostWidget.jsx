@@ -15,8 +15,8 @@ const PostWidget = ({ categories, slug }) => {
     }, [slug]);
 
     return (
-        <div className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 mb-8 border border-light-border dark:border-dark-border">
-            <h3 className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">
+        <aside className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 mb-8 border border-light-border dark:border-dark-border" aria-labelledby="widget-title">
+            <h3 id="widget-title" className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">
                 {slug ? 'Related Posts' : 'Recent Posts'}
             </h3>
             {relatedPosts.map((post) => (
@@ -32,7 +32,7 @@ const PostWidget = ({ categories, slug }) => {
                     </div>
                     <div className="flex-grow ml-4">
                         <p className="text-light-muted dark:text-dark-muted text-xs">
-                            {moment(post.createdAt).format('MMM DD, YYYY')}
+                            <time dateTime={post.createdAt}>{moment(post.createdAt).format('MMM DD, YYYY')}</time>
                         </p>
                         <Link href={`/post/${post.slug}`} className="text-md text-light-text dark:text-dark-text hover:text-primary dark:hover:text-dark-muted transition-colors">
                             {post.title.length > 32 ? post.title.substring(0, 32) + '...' : post.title}
@@ -40,7 +40,7 @@ const PostWidget = ({ categories, slug }) => {
                     </div>
                 </div>
             ))}
-        </div>
+        </aside>
     );
 };
 

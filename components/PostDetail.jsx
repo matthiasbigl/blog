@@ -8,7 +8,7 @@ const PostDetail = ({ post }) => {
     return (
         <>
             <ScrollProgress />
-            <div className="lg:bg-light-card lg:dark:bg-dark-card lg:rounded-md lg:shadow-lg lg:border lg:border-light-border lg:dark:border-dark-border mb-8">
+            <article className="lg:bg-light-card lg:dark:bg-dark-card lg:rounded-md lg:shadow-lg lg:border lg:border-light-border lg:dark:border-dark-border mb-8">
                 {post.featuredImage && (
                     <div className="relative overflow-hidden mb-6 lg:rounded-t-md rounde">
                         <img
@@ -30,17 +30,17 @@ const PostDetail = ({ post }) => {
                         </div>
                         <div className="font-medium text-light-muted dark:text-dark-muted flex items-center">
                             <Calendar className="w-5 h-5 mr-2 text-primary dark:text-dark-muted" />
-                            <span>{moment(post.createdAt).format('MMM DD, YYYY')}</span>
+                            <time dateTime={post.createdAt}>{moment(post.createdAt).format('MMM DD, YYYY')}</time>
                         </div>
                     </div>
 
                     <h1 className="mb-8 text-4xl font-bold text-light-text dark:text-dark-text tracking-tight">{post.title}</h1>
 
-                    <article className="prose prose-lg max-w-none dark:prose-invert">
+                    <div className="prose prose-lg max-w-none dark:prose-invert">
                         <RichText content={post.content.raw} />
-                    </article>
+                    </div>
                 </div>
-            </div>
+            </article>
         </>
     );
 };

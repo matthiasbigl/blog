@@ -12,8 +12,8 @@ const Categories = () => {
     }, []);
 
     return (
-        <div className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 mb-8 pb-12 border border-light-border dark:border-dark-border">
-            <h3 className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">
+        <aside className="bg-light-card dark:bg-dark-card shadow-lg rounded-md p-8 mb-8 pb-12 border border-light-border dark:border-dark-border" aria-labelledby="categories-title">
+            <h3 id="categories-title" className="text-xl mb-8 font-semibold border-b border-light-border dark:border-dark-border pb-4 text-light-text dark:text-dark-text">
                 Categories
             </h3>
             {categories.map((category) => (
@@ -25,7 +25,7 @@ const Categories = () => {
                     </span>
                 </Link>
             ))}
-        </div>
+        </aside>
     );
 };
 

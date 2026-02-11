@@ -49,7 +49,7 @@ const Home = ({ initialPosts, pageInfo }) => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                    <div className="col-span-1 lg:col-span-8">
+                    <section className="col-span-1 lg:col-span-8">
                         <h1 className="text-2xl font-bold text-light-text dark:text-dark-text mb-8 border-b border-light-border dark:border-dark-border pb-4">
                             Latest Articles by Matthias Bigl
                         </h1>
@@ -70,14 +70,14 @@ const Home = ({ initialPosts, pageInfo }) => {
                                 You've reached the end!
                             </div>
                         )}
-                    </div>
+                    </section>
 
-                    <div className="col-span-1 lg:col-span-4">
+                    <aside className="col-span-1 lg:col-span-4">
                         <div className="lg:sticky lg:top-24 space-y-8">
                             <PostWidget />
                             <Categories />
                         </div>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </div>
