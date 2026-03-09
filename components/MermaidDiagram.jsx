@@ -5,6 +5,8 @@ const getTextFromChildren = (children) => {
   if (children == null) return ''
   if (typeof children === 'string') return children
   if (Array.isArray(children)) return children.map(getTextFromChildren).join('')
+  if (Array.isArray(children?.children))
+    return children.children.map(getTextFromChildren).join('')
   if (typeof children === 'object' && typeof children.text === 'string')
     return children.text
   if (typeof children === 'object' && typeof children.value === 'string')

@@ -10,6 +10,12 @@ const fencedMermaidPrefixPattern = /^\s*```+\s*mermaid\s*(?:\r?\n|$)/i
 const fencedCodeSuffixPattern = /\r?\n\s*```+\s*$/i
 const notSetLanguageLabel = 'not set'
 const detectedMermaidLanguageLabel = 'not set (detected as mermaid)'
+const placeholderLanguageLabels = new Set([
+  '',
+  'not set',
+  'none',
+  'plain text',
+])
 
 const normalizeCodeText = (value) =>
   typeof value === 'string' ? value.replace(/\u00a0/g, ' ').trim() : ''
@@ -28,6 +34,12 @@ const tryExtractMermaidCode = (code) => {
   }
 
   return null
+}
+
+const normalizeLanguage = (lang) => {
+  const trimmed = typeof lang === 'string' ? lang.trim() : ''
+  if (!trimmed) return ''
+  return placeholderLanguageLabels.has(trimmed.toLowerCase()) ? '' : trimmed
 }
 
 const PostDetail = ({ post, viewCount }) => {
@@ -79,8 +91,7 @@ const PostDetail = ({ post, viewCount }) => {
               content={post.content.raw}
               renderers={{
                 code_block: ({ children, lang }) => {
-                  const trimmedLanguage =
-                    typeof lang === 'string' ? lang.trim() : ''
+                  const trimmedLanguage = normalizeLanguage(lang)
                   const code = getTextFromChildren(children)
                   const inferredMermaidCode =
                     !trimmedLanguage && code ? tryExtractMermaidCode(code) : null
