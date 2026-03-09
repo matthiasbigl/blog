@@ -55,6 +55,8 @@ const MermaidDiagram = ({ code }) => {
   const dragRef = useRef(null)
   const pointersRef = useRef(new Map()) // pointerId → {x, y}
   const pinchRef = useRef(null) // { dist }
+  const svgSizeRef = useRef({ w: 0, h: 0 }) // natural (unscaled) SVG dimensions
+  const scaleRef = useRef(1) // mirrors scale state, updated synchronously
 
   // Render mermaid SVG
   useEffect(() => {
@@ -97,6 +99,8 @@ const MermaidDiagram = ({ code }) => {
 
     if (svgW <= 0 || svgH <= 0) return
 
+    svgSizeRef.current = { w: svgW, h: svgH }
+
     const fitScale = clamp(
       Math.min(containerW / svgW, containerH / svgH),
       MIN_SCALE,
@@ -106,9 +110,24 @@ const MermaidDiagram = ({ code }) => {
     const fitY = (containerH - svgH * fitScale) / 2
 
     fitRef.current = { scale: fitScale, x: fitX, y: fitY }
+    scaleRef.current = fitScale
     setScale(fitScale)
     setOffset({ x: fitX, y: fitY })
   }, [svg])
+
+  // Clamp offset so at least BOUNDS_MARGIN px of the diagram stays visible
+  const BOUNDS_MARGIN = 80
+  const clampOffset = useCallback((ox, oy, sc) => {
+    if (!containerRef.current) return { x: ox, y: oy }
+    const { w: svgW, h: svgH } = svgSizeRef.current
+    if (svgW <= 0 || svgH <= 0) return { x: ox, y: oy }
+    const containerW = containerRef.current.clientWidth
+    const containerH = containerRef.current.clientHeight
+    return {
+      x: clamp(ox, BOUNDS_MARGIN - svgW * sc, containerW - BOUNDS_MARGIN),
+      y: clamp(oy, BOUNDS_MARGIN - svgH * sc, containerH - BOUNDS_MARGIN),
+    }
+  }, [])
 
   // Wheel → zoom toward cursor, only when focused
   const handleWheel = useCallback(
@@ -121,15 +140,15 @@ const MermaidDiagram = ({ code }) => {
       const delta = e.deltaY < 0 ? 1.1 : 1 / 1.1
       setScale((prev) => {
         const next = clamp(prev * delta, MIN_SCALE, MAX_SCALE)
+        scaleRef.current = next
         const ratio = next / prev
-        setOffset((o) => ({
-          x: cx - ratio * (cx - o.x),
-          y: cy - ratio * (cy - o.y),
-        }))
+        setOffset((o) =>
+          clampOffset(cx - ratio * (cx - o.x), cy - ratio * (cy - o.y), next),
+        )
         return next
       })
     },
-    [focused],
+    [focused, clampOffset],
   )
 
   useEffect(() => {
@@ -164,39 +183,43 @@ const MermaidDiagram = ({ code }) => {
     [offset],
   )
 
-  const handlePointerMove = useCallback((e) => {
-    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+  const handlePointerMove = useCallback(
+    (e) => {
+      pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
 
-    if (pointersRef.current.size >= 2 && pinchRef.current) {
-      // Pinch zoom
-      const pts = [...pointersRef.current.values()]
-      const dx = pts[0].x - pts[1].x
-      const dy = pts[0].y - pts[1].y
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      const ratio = dist / pinchRef.current.dist
-      pinchRef.current.dist = dist
+      if (pointersRef.current.size >= 2 && pinchRef.current) {
+        // Pinch zoom
+        const pts = [...pointersRef.current.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        const ratio = dist / pinchRef.current.dist
+        pinchRef.current.dist = dist
 
-      const rect = containerRef.current.getBoundingClientRect()
-      const cx = (pts[0].x + pts[1].x) / 2 - rect.left
-      const cy = (pts[0].y + pts[1].y) / 2 - rect.top
+        const rect = containerRef.current.getBoundingClientRect()
+        const cx = (pts[0].x + pts[1].x) / 2 - rect.left
+        const cy = (pts[0].y + pts[1].y) / 2 - rect.top
 
-      setScale((prev) => {
-        const next = clamp(prev * ratio, MIN_SCALE, MAX_SCALE)
-        const r = next / prev
-        setOffset((o) => ({
-          x: cx - r * (cx - o.x),
-          y: cy - r * (cy - o.y),
-        }))
-        return next
-      })
-    } else if (pointersRef.current.size === 1 && dragRef.current) {
-      // Pan
-      setOffset({
-        x: dragRef.current.originX + e.clientX - dragRef.current.startX,
-        y: dragRef.current.originY + e.clientY - dragRef.current.startY,
-      })
-    }
-  }, [])
+        setScale((prev) => {
+          const next = clamp(prev * ratio, MIN_SCALE, MAX_SCALE)
+          scaleRef.current = next
+          const r = next / prev
+          setOffset((o) =>
+            clampOffset(cx - r * (cx - o.x), cy - r * (cy - o.y), next),
+          )
+          return next
+        })
+      } else if (pointersRef.current.size === 1 && dragRef.current) {
+        // Pan
+        const newX =
+          dragRef.current.originX + e.clientX - dragRef.current.startX
+        const newY =
+          dragRef.current.originY + e.clientY - dragRef.current.startY
+        setOffset(clampOffset(newX, newY, scaleRef.current))
+      }
+    },
+    [clampOffset],
+  )
 
   const handlePointerUp = useCallback((e) => {
     pointersRef.current.delete(e.pointerId)
