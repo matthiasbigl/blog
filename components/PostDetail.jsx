@@ -6,6 +6,8 @@ import MermaidDiagram, { getTextFromChildren } from './MermaidDiagram'
 import { Calendar, Eye } from 'lucide-react'
 
 const mermaidPrefixPattern = /^\s*mermaid(?:\r?\n|\s|$)/i
+const notSetLanguageLabel = 'not set'
+const detectedMermaidLanguageLabel = 'not set (detected as mermaid)'
 
 const PostDetail = ({ post, viewCount }) => {
   return (
@@ -56,25 +58,46 @@ const PostDetail = ({ post, viewCount }) => {
               content={post.content.raw}
               renderers={{
                 code_block: ({ children, lang }) => {
-                  if (lang === 'mermaid') {
+                  const trimmedLanguage =
+                    typeof lang === 'string' ? lang.trim() : ''
+                  const renderLanguageInfo = (label) => (
+                    <p className="mt-2 text-xs text-light-muted dark:text-dark-muted">
+                      Language: {label}
+                    </p>
+                  )
+
+                  if (trimmedLanguage === 'mermaid') {
                     const code = getTextFromChildren(children)
                     const mermaidCode = code.replace(mermaidPrefixPattern, '')
-                    return <MermaidDiagram code={mermaidCode} />
+                    return (
+                      <>
+                        <MermaidDiagram code={mermaidCode} />
+                        {renderLanguageInfo('mermaid')}
+                      </>
+                    )
                   }
 
-                  if (!lang) {
+                  if (!trimmedLanguage) {
                     const code = getTextFromChildren(children)
                     const hasMermaidPrefix = mermaidPrefixPattern.test(code)
 
                     if (hasMermaidPrefix) {
                       const mermaidCode = code.replace(mermaidPrefixPattern, '')
-                      return <MermaidDiagram code={mermaidCode} />
+                      return (
+                        <>
+                          <MermaidDiagram code={mermaidCode} />
+                          {renderLanguageInfo(detectedMermaidLanguageLabel)}
+                        </>
+                      )
                     }
                   }
                   return (
-                    <pre>
-                      <code>{children}</code>
-                    </pre>
+                    <>
+                      <pre>
+                        <code>{children}</code>
+                      </pre>
+                      {renderLanguageInfo(trimmedLanguage || notSetLanguageLabel)}
+                    </>
                   )
                 },
               }}
