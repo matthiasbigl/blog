@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { RichText } from '@graphcms/rich-text-react-renderer'
 import { ScrollProgress } from './'
+import MermaidDiagram, { getTextFromChildren } from './MermaidDiagram'
 import { Calendar, Eye } from 'lucide-react'
 
 const PostDetail = ({ post, viewCount }) => {
@@ -49,7 +50,22 @@ const PostDetail = ({ post, viewCount }) => {
           </h1>
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
-            <RichText content={post.content.raw} />
+            <RichText
+              content={post.content.raw}
+              renderers={{
+                code_block: ({ children, lang }) => {
+                  if (lang === 'mermaid') {
+                    const code = getTextFromChildren(children)
+                    return <MermaidDiagram code={code} />
+                  }
+                  return (
+                    <pre>
+                      <code>{children}</code>
+                    </pre>
+                  )
+                },
+              }}
+            />
           </div>
         </div>
       </article>
