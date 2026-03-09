@@ -6,8 +6,29 @@ import MermaidDiagram, { getTextFromChildren } from './MermaidDiagram'
 import { Calendar, Eye } from 'lucide-react'
 
 const mermaidPrefixPattern = /^\s*mermaid(?:\r?\n|\s|$)/i
+const fencedMermaidPrefixPattern = /^\s*```+\s*mermaid\s*(?:\r?\n|$)/i
+const fencedCodeSuffixPattern = /\r?\n\s*```+\s*$/i
 const notSetLanguageLabel = 'not set'
 const detectedMermaidLanguageLabel = 'not set (detected as mermaid)'
+
+const normalizeCodeText = (value) =>
+  typeof value === 'string' ? value.replace(/\u00a0/g, ' ').trim() : ''
+
+const tryExtractMermaidCode = (code) => {
+  if (!code) return null
+  const normalized = normalizeCodeText(code)
+
+  if (mermaidPrefixPattern.test(normalized)) {
+    return normalized.replace(mermaidPrefixPattern, '')
+  }
+
+  if (fencedMermaidPrefixPattern.test(normalized)) {
+    const withoutPrefix = normalized.replace(fencedMermaidPrefixPattern, '')
+    return withoutPrefix.replace(fencedCodeSuffixPattern, '').trim()
+  }
+
+  return null
+}
 
 const PostDetail = ({ post, viewCount }) => {
   return (
@@ -60,6 +81,9 @@ const PostDetail = ({ post, viewCount }) => {
                 code_block: ({ children, lang }) => {
                   const trimmedLanguage =
                     typeof lang === 'string' ? lang.trim() : ''
+                  const code = getTextFromChildren(children)
+                  const inferredMermaidCode =
+                    !trimmedLanguage && code ? tryExtractMermaidCode(code) : null
                   const renderLanguageInfo = (label) => (
                     <p className="mt-2 text-xs text-light-muted dark:text-dark-muted">
                       Language: {label}
@@ -67,8 +91,8 @@ const PostDetail = ({ post, viewCount }) => {
                   )
 
                   if (trimmedLanguage === 'mermaid') {
-                    const code = getTextFromChildren(children)
-                    const mermaidCode = code.replace(mermaidPrefixPattern, '')
+                    const mermaidCode =
+                      tryExtractMermaidCode(code) || normalizeCodeText(code)
                     return (
                       <>
                         <MermaidDiagram code={mermaidCode} />
@@ -78,14 +102,10 @@ const PostDetail = ({ post, viewCount }) => {
                   }
 
                   if (!trimmedLanguage) {
-                    const code = getTextFromChildren(children)
-                    const hasMermaidPrefix = mermaidPrefixPattern.test(code)
-
-                    if (hasMermaidPrefix) {
-                      const mermaidCode = code.replace(mermaidPrefixPattern, '')
+                    if (inferredMermaidCode) {
                       return (
                         <>
-                          <MermaidDiagram code={mermaidCode} />
+                          <MermaidDiagram code={inferredMermaidCode} />
                           {renderLanguageInfo(detectedMermaidLanguageLabel)}
                         </>
                       )
