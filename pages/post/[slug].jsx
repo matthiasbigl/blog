@@ -47,9 +47,9 @@ const PostDetails = ({ post }) => {
         modifiedTime={post.updatedAt}
         tags={post.categories?.map((cat) => cat.name) || []}
       />
-      <div className="lg:container lg:mx-auto lg:px-8 mb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-12">
-          <div className="col-span-1 lg:col-span-8">
+      <div className="mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] lg:gap-12">
+          <div className="min-w-0">
             <PostDetail post={post} viewCount={viewCount} />
             <div className="px-4 lg:px-0">
               <Author author={post.author} />
@@ -57,7 +57,7 @@ const PostDetails = ({ post }) => {
               <Comments slug={post.slug} />
             </div>
           </div>
-          <aside className="col-span-1 lg:col-span-4">
+          <aside className="w-full">
             <div className="relative lg:sticky top-24">
               <PostWidget
                 slug={post.slug}

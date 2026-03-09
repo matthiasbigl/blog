@@ -11,18 +11,16 @@ const fencedMermaidPrefixPattern = /^\s*```+\s*mermaid\s*(?:\r?\n|$)/i
 const fencedCodeSuffixPattern = /\r?\n\s*```+\s*$/i
 const mermaidDiagramStartPattern =
   /^(?:flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|journey|gantt|pie|gitGraph|mindmap|timeline|quadrantChart|requirementDiagram|block-beta|xychart-beta|sankey-beta|C4(?:Context|Container|Component|Dynamic|Deployment))\b/i
-const notSetLanguageLabel = 'not set'
-const detectedMermaidLanguageLabel = 'not set (detected as mermaid)'
-const placeholderLanguageLabels = new Set([
-  '',
-  'not set',
-  'none',
-  'plain text',
-])
+const notSetLanguageLabel = 'text'
+const detectedMermaidLanguageLabel = 'mermaid'
+const placeholderLanguageLabels = new Set(['', 'not set', 'none', 'plain text'])
 
 const normalizeCodeText = (value) =>
   typeof value === 'string'
-    ? value.replace(/\u00a0/g, ' ').replace(/[\u200b\u200c\u200d\ufeff]/g, '').trim()
+    ? value
+        .replace(/\u00a0/g, ' ')
+        .replace(/[\u200b\u200c\u200d\ufeff]/g, '')
+        .trim()
     : ''
 
 const tryExtractMermaidCode = (code) => {
@@ -45,6 +43,10 @@ const tryExtractMermaidCode = (code) => {
     if (mermaidDiagramStartPattern.test(withoutCompactPrefix)) {
       return withoutCompactPrefix
     }
+  }
+
+  if (mermaidDiagramStartPattern.test(normalized)) {
+    return normalized
   }
 
   return null
@@ -108,7 +110,9 @@ const PostDetail = ({ post, viewCount }) => {
                   const trimmedLanguage = normalizeLanguage(lang)
                   const code = getTextFromChildren(children)
                   const inferredMermaidCode =
-                    !trimmedLanguage && code ? tryExtractMermaidCode(code) : null
+                    !trimmedLanguage && code
+                      ? tryExtractMermaidCode(code)
+                      : null
                   const renderLanguageInfo = (label) => (
                     <p className="mt-2 text-xs text-light-muted dark:text-dark-muted">
                       Language: {label}
@@ -141,7 +145,9 @@ const PostDetail = ({ post, viewCount }) => {
                       <pre>
                         <code>{children}</code>
                       </pre>
-                      {renderLanguageInfo(trimmedLanguage || notSetLanguageLabel)}
+                      {renderLanguageInfo(
+                        trimmedLanguage || notSetLanguageLabel,
+                      )}
                     </>
                   )
                 },
