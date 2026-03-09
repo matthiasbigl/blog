@@ -13,6 +13,7 @@ export { default as AdjacentPostCard } from './AdjacentPostCard';
 export { default as BentoGrid } from './BentoGrid';
 export { default as MobileDock } from './MobileDock';
 export { default as ScrollProgress } from './ScrollProgress';
+export { default as MermaidDiagram } from './MermaidDiagram';
 export { default as ThemeToggle } from './ThemeToggle';
 export { default as Search } from './Search';
 export { default as Footer } from './Footer';
