@@ -6,8 +6,11 @@ import MermaidDiagram, { getTextFromChildren } from './MermaidDiagram'
 import { Calendar, Eye } from 'lucide-react'
 
 const mermaidPrefixPattern = /^\s*mermaid(?:\r?\n|\s|$)/i
+const compactMermaidPrefixPattern = /^\s*mermaid(?=[A-Za-z])/i
 const fencedMermaidPrefixPattern = /^\s*```+\s*mermaid\s*(?:\r?\n|$)/i
 const fencedCodeSuffixPattern = /\r?\n\s*```+\s*$/i
+const mermaidDiagramStartPattern =
+  /^(?:flowchart|graph|sequenceDiagram|classDiagram|stateDiagram(?:-v2)?|erDiagram|journey|gantt|pie|gitGraph|mindmap|timeline|quadrantChart|requirementDiagram|block-beta|xychart-beta|sankey-beta|C4(?:Context|Container|Component|Dynamic|Deployment))\b/i
 const notSetLanguageLabel = 'not set'
 const detectedMermaidLanguageLabel = 'not set (detected as mermaid)'
 const placeholderLanguageLabels = new Set([
@@ -18,7 +21,9 @@ const placeholderLanguageLabels = new Set([
 ])
 
 const normalizeCodeText = (value) =>
-  typeof value === 'string' ? value.replace(/\u00a0/g, ' ').trim() : ''
+  typeof value === 'string'
+    ? value.replace(/\u00a0/g, ' ').replace(/[\u200b\u200c\u200d\ufeff]/g, '').trim()
+    : ''
 
 const tryExtractMermaidCode = (code) => {
   if (!code) return null
@@ -31,6 +36,15 @@ const tryExtractMermaidCode = (code) => {
   if (fencedMermaidPrefixPattern.test(normalized)) {
     const withoutPrefix = normalized.replace(fencedMermaidPrefixPattern, '')
     return withoutPrefix.replace(fencedCodeSuffixPattern, '').trim()
+  }
+
+  if (compactMermaidPrefixPattern.test(normalized)) {
+    const withoutCompactPrefix = normalized
+      .replace(compactMermaidPrefixPattern, '')
+      .trim()
+    if (mermaidDiagramStartPattern.test(withoutCompactPrefix)) {
+      return withoutCompactPrefix
+    }
   }
 
   return null
