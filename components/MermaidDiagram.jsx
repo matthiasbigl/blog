@@ -2,9 +2,17 @@ import React, { useEffect, useId, useRef, useState, useContext } from 'react'
 import { ThemeContext } from '../pages/_app'
 
 const getTextFromChildren = (children) => {
+  if (children == null) return ''
   if (typeof children === 'string') return children
+  if (typeof children === 'number') return String(children)
   if (Array.isArray(children)) return children.map(getTextFromChildren).join('')
-  if (children?.props?.children)
+  if (children?.type === 'br') return '\n'
+  if (children?.children != null) return getTextFromChildren(children.children)
+  if (typeof children === 'object' && typeof children.text === 'string')
+    return children.text
+  if (typeof children === 'object' && typeof children.value === 'string')
+    return children.value
+  if (children?.props && 'children' in children.props)
     return getTextFromChildren(children.props.children)
   return ''
 }
