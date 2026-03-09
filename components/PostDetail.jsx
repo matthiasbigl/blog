@@ -5,6 +5,8 @@ import { ScrollProgress } from './'
 import MermaidDiagram, { getTextFromChildren } from './MermaidDiagram'
 import { Calendar, Eye } from 'lucide-react'
 
+const mermaidPrefixPattern = /^\s*mermaid(?:\r?\n|\s|$)/i
+
 const PostDetail = ({ post, viewCount }) => {
   return (
     <>
@@ -54,15 +56,20 @@ const PostDetail = ({ post, viewCount }) => {
               content={post.content.raw}
               renderers={{
                 code_block: ({ children, lang }) => {
-                  const code = getTextFromChildren(children)
-                  const hasMermaidPrefix = /^\s*mermaid(?:\s|$)/i.test(code)
+                  if (lang === 'mermaid') {
+                    const code = getTextFromChildren(children)
+                    const mermaidCode = code.replace(mermaidPrefixPattern, '')
+                    return <MermaidDiagram code={mermaidCode} />
+                  }
 
-                  if (lang === 'mermaid' || hasMermaidPrefix) {
-                    const mermaidCode = code.replace(
-                      /^\s*mermaid(?:\r?\n|\s+)/i,
-                      ''
-                    )
-                    return <MermaidDiagram code={mermaidCode || code} />
+                  if (!lang) {
+                    const code = getTextFromChildren(children)
+                    const hasMermaidPrefix = mermaidPrefixPattern.test(code)
+
+                    if (hasMermaidPrefix) {
+                      const mermaidCode = code.replace(mermaidPrefixPattern, '')
+                      return <MermaidDiagram code={mermaidCode} />
+                    }
                   }
                   return (
                     <pre>
