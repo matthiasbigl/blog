@@ -54,9 +54,15 @@ const PostDetail = ({ post, viewCount }) => {
               content={post.content.raw}
               renderers={{
                 code_block: ({ children, lang }) => {
-                  if (lang === 'mermaid') {
-                    const code = getTextFromChildren(children)
-                    return <MermaidDiagram code={code} />
+                  const code = getTextFromChildren(children)
+                  const hasMermaidPrefix = /^\s*mermaid(?:\s|$)/i.test(code)
+
+                  if (lang === 'mermaid' || hasMermaidPrefix) {
+                    const mermaidCode = code.replace(
+                      /^\s*mermaid(?:\r?\n|\s+)/i,
+                      ''
+                    )
+                    return <MermaidDiagram code={mermaidCode || code} />
                   }
                   return (
                     <pre>
